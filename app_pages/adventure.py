@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import streamlit as st
 from streamlit.errors import StreamlitSecretNotFoundError
@@ -8,6 +9,7 @@ from utils.gemini_adventure import (
     AdventureModelError,
     generate_turn,
 )
+from utils.audio import render_hidden_looping_audio
 from utils.game_save import (
     MAX_INVENTORY_ITEMS,
     add_adventure_turn,
@@ -15,6 +17,10 @@ from utils.game_save import (
     get_character,
     get_messages,
     list_characters,
+)
+
+GAME_MUSIC_FILE = (
+    Path(__file__).resolve().parents[1] / "assets" / "music" / "game-song.mp3"
 )
 
 
@@ -98,6 +104,12 @@ if not api_key:
     st.stop()
 
 messages = get_messages(save_data, selected_id)
+if messages:
+    render_hidden_looping_audio(
+        GAME_MUSIC_FILE,
+        "Muzyka przygody",
+        audio_id="game-adventure-music",
+    )
 if not messages:
     st.write("Gliwice czekają. Rozpocznij przygodę, by odkryć pierwszą scenę.")
     if st.button("Rozpocznij przygodę", type="primary", key="start_adventure"):
@@ -128,6 +140,10 @@ if not messages:
     st.stop()
 
 selected_action = None
+retry_action_key = f"adventure_retry_action_{selected_id}"
+retry_error_key = f"adventure_retry_error_{selected_id}"
+retry_action = st.session_state.get(retry_action_key)
+retry_requested = False
 restore_choices_requested = False
 
 for message_index, message in enumerate(messages):
@@ -155,6 +171,18 @@ for message_index, message in enumerate(messages):
                 key=f"restore_choices_{selected_id}",
             )
 
+if retry_action:
+    with st.container(border=True):
+        st.error(
+            "Nie udało się rozegrać wybranej akcji: "
+            f"{st.session_state.get(retry_error_key, 'Wystąpił błąd.')}"
+        )
+        retry_requested = st.button(
+            f"Ponów akcję: {retry_action}",
+            type="primary",
+            key=f"retry_adventure_action_{selected_id}",
+        )
+
 if restore_choices_requested:
     try:
         opening = generate_turn(
@@ -174,13 +202,14 @@ if restore_choices_requested:
     except (AdventureModelError, ValueError) as error:
         st.error(f"Nie udało się wygenerować opcji: {error}")
 
-if selected_action:
+action_to_play = selected_action or (retry_action if retry_requested else None)
+if action_to_play:
     try:
         turn = generate_turn(
             api_key=api_key,
             character=character,
             messages=messages,
-            player_action=selected_action,
+            player_action=action_to_play,
         )
         if turn.model_name == MODEL_NAME:
             st.session_state.pop("gemini_model_note", None)
@@ -191,7 +220,7 @@ if selected_action:
         balance_change = add_adventure_turn(
             save_data,
             selected_id,
-            selected_action,
+            action_to_play,
             turn.narration,
             turn.choices,
             turn.outcome,
@@ -205,9 +234,13 @@ if selected_action:
             )
         else:
             st.session_state.pop("adventure_balance_note", None)
+        st.session_state.pop(retry_action_key, None)
+        st.session_state.pop(retry_error_key, None)
         st.rerun()
     except (AdventureModelError, ValueError) as error:
-        st.error(f"Nie udało się rozegrać wybranej akcji: {error}")
+        st.session_state[retry_action_key] = action_to_play
+        st.session_state[retry_error_key] = str(error)
+        st.rerun()
 
 balance_note = st.session_state.get("adventure_balance_note")
 if balance_note:

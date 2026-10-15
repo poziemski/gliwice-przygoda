@@ -14,6 +14,7 @@ tym urządzeniu. Zapis nie jest synchronizowany między urządzeniami.
 ## Muzyka i efekty dźwiękowe
 
 - `assets/music/title_theme.wav` — zapętlony motyw ekranu tytułowego.
+- `assets/music/game-song.mp3` — zapętlona muzyka odtwarzana w trakcie przygody.
 - Przyszłe efekty dźwiękowe umieszczaj w `assets/sfx/`.
 
 ## Uruchomienie lokalne
@@ -29,8 +30,10 @@ streamlit run app.py
 
 Do generowania krótkich scen i trzech klikalnych opcji akcji używane jest API
 Gemini. Jeśli główny model jest niedostępny lub osiągnął limit, aplikacja
-próbuje kolejno Gemini 2.5 Flash-Lite i Gemini 2.5 Flash, używając tego samego
+próbuje kolejno Gemini 3.5 Flash-Lite i Gemini 3.8 Flash, używając tego samego
 klucza API. Dostępność modeli i limity darmowego poziomu zależą od Google.
+Instrukcje dla mistrza gry znajdują się w `utils/adventure_prompts.py`, dzięki
+czemu można je edytować niezależnie od logiki połączenia z API.
 
 Utwórz klucz API w Google AI Studio i udostępnij go aplikacji przez zmienną
 środowiskową `GEMINI_API_KEY` albo plik `.streamlit/secrets.toml`:

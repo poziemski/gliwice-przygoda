@@ -67,6 +67,7 @@ st.title("GLIWICE")
 render_hidden_looping_audio(
     MUSIC_FILE,
     "Ambientowy motyw muzyczny ekranu tytułowego",
+    audio_id="title-screen-music",
 )
 
 _, start_column, _ = st.columns([1, 1, 1])
