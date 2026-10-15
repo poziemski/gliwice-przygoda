@@ -5,7 +5,7 @@ from utils.game_save import DEFAULT_SAVE, validate_save_data
 from utils.ui_theme import apply_night_theme
 
 
-st.set_page_config(page_title="Gliwice: Karta postaci", page_icon="🌆", layout="wide")
+st.set_page_config(page_title="Gliwice: Przygoda", page_icon="🌆", layout="wide")
 apply_night_theme()
 
 st.session_state.setdefault("browser_storage_error", "")
