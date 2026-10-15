@@ -1,4 +1,4 @@
-# Gliwice: Karta postaci
+# Gliwice: Przygoda
 
 Tekstowa przygoda w klimacie miejskiej tajemnicy, osadzona we współczesnych
 Gliwicach. Rozpocznij od prologu o nocnym sygnale z Radiostacji, stwórz postać
