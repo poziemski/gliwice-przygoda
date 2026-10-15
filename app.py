@@ -2,9 +2,11 @@ import streamlit as st
 
 from utils.browser_storage import render_browser_save_store
 from utils.game_save import DEFAULT_SAVE, validate_save_data
+from utils.ui_theme import apply_night_theme
 
 
 st.set_page_config(page_title="Gliwice: Karta postaci", page_icon="🌆", layout="wide")
+apply_night_theme()
 
 st.session_state.setdefault("browser_storage_error", "")
 store_result = render_browser_save_store(
@@ -41,6 +43,7 @@ st.markdown(
 page = st.navigation(
     [
         st.Page("app_pages/title_screen.py", title="Start"),
+        st.Page("app_pages/story_intro.py", title="Prolog"),
         st.Page("app_pages/character_creation.py", title="Kreator postaci"),
         st.Page("app_pages/adventure.py", title="Przygoda"),
     ],

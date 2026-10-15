@@ -6,6 +6,15 @@ DISTRICTS = {
     "Ostropa": "Na obrzeżach miasta stare opowieści wciąż mają swoje miejsce przy domowym stole.",
 }
 
+CAMPAIGN_PREMISE = (
+    "Od kilku tygodni z gliwickiej Radiostacji po zmroku płynie sygnał, "
+    "którego nie ma w żadnym rejestrze. Wśród zakłóceń słychać nazwy ulic, "
+    "godziny i imiona ludzi, którzy następnego dnia znikają bez śladu. "
+    "Ostatnia transmisja wymieniła dzielnicę bohatera i dzisiejszą datę. "
+    "Bohater musi odkryć źródło sygnału i powiązanie zniknięć, zanim transmisja "
+    "wskaże kolejną osobę."
+)
+
 ARCHETYPES = {
     "Tropiciel": "Łączysz wskazówki, zanim inni zauważą, że coś się nie zgadza.",
     "Majster": "Potrafisz naprawić niemal wszystko — zwłaszcza jeśli masz chwilę i właściwy klucz.",

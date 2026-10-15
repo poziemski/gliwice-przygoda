@@ -88,13 +88,13 @@ with save_column:
     save_and_start = st.button(
         "Zapisz postać i rozpocznij przygodę",
         type="primary",
-        use_container_width=True,
+        width="stretch",
         key="save_character",
     )
 with back_column:
     back_to_title = st.button(
         "← Ekran tytułowy",
-        use_container_width=True,
+        width="stretch",
         key="back_to_title",
     )
 

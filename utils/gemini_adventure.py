@@ -6,7 +6,7 @@ from typing import Literal
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from utils.game_data import ARCHETYPES, DISTRICTS
+from utils.game_data import ARCHETYPES, CAMPAIGN_PREMISE, DISTRICTS
 
 
 MODEL_NAME = "gemini-3.1-flash-lite"
@@ -61,6 +61,11 @@ przyciski działań: gracz NIE wpisuje własnych odpowiedzi.
   trwające, konkretne zdarzenie z oczywistą stawką dla postaci. Zacznij od
   incydentu, nie od „Stoisz…”, „Idziesz…”, „Znajdujesz się…”, „Pewnego dnia…”
   ani od ogólnego opisu dzielnicy. Dzielnicę wpleć krótko w sam incydent.
+- Główna oś kampanii to sygnał nadawany nocą z Radiostacji w Gliwicach.
+  Wśród zakłóceń pojawiają się nazwy ulic, godziny i imiona osób zaginionych
+  następnego dnia; ostatnia transmisja wymieniła dzielnicę bohatera i dzisiejszą
+  datę. Bohater odkrywa, kto lub co nadaje sygnał i dlaczego ludzie znikają.
+  Buduj tę tajemnicę stopniowo, podsuwaj tropy i nie rozwiązuj jej w prologu.
 - Wymyśl wiarygodny, interesujący haczyk przygodowy związany z Gliwicami:
   ktoś w panice wciska postaci tajemniczy przedmiot; z Radiostacji pada
   niepokojący sygnał; świadek znika w trakcie rozmowy; postać odkrywa świeży
@@ -279,6 +284,7 @@ def generate_turn(
         "name": character["name"],
         "district": character["district"],
         "district_lore": DISTRICTS.get(character["district"], ""),
+        "campaign_premise": CAMPAIGN_PREMISE,
         "archetype": character["archetype"],
         "archetype_description": ARCHETYPES.get(character["archetype"], ""),
         "backstory": character["backstory"],

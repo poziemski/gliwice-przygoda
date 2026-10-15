@@ -15,7 +15,8 @@ st.markdown(
     <style>
     .stApp {
         background:
-            linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.62)),
+            linear-gradient(rgba(16, 21, 34, 0.58), rgba(16, 21, 34, 0.76)),
+            linear-gradient(130deg, rgba(101, 86, 168, 0.12), transparent 58%),
             url("data:image/gif;base64,BACKGROUND_DATA") center / cover no-repeat fixed;
     }
     [data-testid="stHeader"],
@@ -52,7 +53,8 @@ st.markdown(
         position: fixed;
         right: 1.5rem;
         bottom: 1rem;
-        color: #888;
+        color: #E4D9C5;
+        opacity: 0.72;
         font-size: 0.8rem;
         letter-spacing: 0.08em;
     }
@@ -69,9 +71,10 @@ render_hidden_looping_audio(
 
 _, start_column, _ = st.columns([1, 1, 1])
 with start_column:
-    start_game = st.button("Zacznij!", type="primary", use_container_width=True)
+    start_game = st.button("Zacznij!", type="primary", width="stretch")
 
 st.markdown('<div class="game-version">WERSJA 0.1.0 · PROLOG</div>', unsafe_allow_html=True)
 
 if start_game:
-    st.switch_page("app_pages/character_creation.py")
+    st.session_state["intro_shown"] = False
+    st.switch_page("app_pages/story_intro.py")

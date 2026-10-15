@@ -1,48 +1,52 @@
 # Gliwice: Karta postaci
 
-A simple character creator for a setting inspired by Gliwice. Start at the
-title screen, then choose a district and role, write a short backstory, and set
-your character's attributes. Characters and their adventure history are saved
-in your browser's local storage on this device.
+Tekstowa przygoda w klimacie miejskiej tajemnicy, osadzona we współczesnych
+Gliwicach. Rozpocznij od prologu o nocnym sygnale z Radiostacji, stwórz postać
+i rozwijaj historię, wybierając jedną z trzech akcji w każdej turze. Postać ma
+trzy atrybuty oraz ekwipunek z miejscem na maksymalnie trzy przedmioty.
 
-## Audio assets
+Postacie i przebieg przygody są zapisywane w pamięci lokalnej przeglądarki na
+tym urządzeniu. Zapis nie jest synchronizowany między urządzeniami.
 
-- `assets/music/title_theme.wav` is the looping title-screen theme.
-- Put future sound effects in `assets/sfx/`.
+## Prezentacja wideo
 
-## Run locally
 
-Install the dependencies and start the app:
+## Muzyka i efekty dźwiękowe
 
-```bash
+- `assets/music/title_theme.wav` — zapętlony motyw ekranu tytułowego.
+- Przyszłe efekty dźwiękowe umieszczaj w `assets/sfx/`.
+
+## Uruchomienie lokalne
+
+Zainstaluj zależności i uruchom aplikację:
+
+```powershell
 python -m pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Gemini adventure
+## Przygoda z Gemini
 
-The adventure uses the Gemini API to create short scenes and exactly three
-clickable action choices per turn. Characters can carry up to three items;
-Gemini can award, consume, lose, or hand off items as the story justifies.
-Players continue the story by selecting an option button rather than entering
-free-form text. If the primary model is unavailable or rate-limited, the app
-tries Gemini 2.5 Flash-Lite and then Gemini 2.5 Flash using the same API key.
-Fallback models are still subject to Google's free-tier model availability
-and quotas. Create an API key in Google AI Studio and provide it using either
-a `GEMINI_API_KEY` environment variable or a `.streamlit/secrets.toml` file:
+Do generowania krótkich scen i trzech klikalnych opcji akcji używane jest API
+Gemini. Jeśli główny model jest niedostępny lub osiągnął limit, aplikacja
+próbuje kolejno Gemini 2.5 Flash-Lite i Gemini 2.5 Flash, używając tego samego
+klucza API. Dostępność modeli i limity darmowego poziomu zależą od Google.
+
+Utwórz klucz API w Google AI Studio i udostępnij go aplikacji przez zmienną
+środowiskową `GEMINI_API_KEY` albo plik `.streamlit/secrets.toml`:
 
 ```toml
-GEMINI_API_KEY = "your-api-key"
+GEMINI_API_KEY = "twój-klucz-api"
 ```
 
-In PowerShell, you can set the environment variable for the current terminal
-before starting Streamlit:
+W PowerShell możesz ustawić zmienną dla bieżącego terminala przed
+uruchomieniem Streamlit:
 
 ```powershell
-$env:GEMINI_API_KEY = "your-api-key"
+$env:GEMINI_API_KEY = "twój-klucz-api"
 streamlit run app.py
 ```
 
-Do not commit the API key. The local secrets file is excluded by `.gitignore`.
-The game save remains in this browser and can be cleared by deleting this
-site's browser data; it is not synced between devices.
+Nie zapisuj klucza API w repozytorium. Lokalny plik secrets jest wykluczony
+przez `.gitignore`. Zapis gry można usunąć, kasując dane tej witryny
+w przeglądarce.
