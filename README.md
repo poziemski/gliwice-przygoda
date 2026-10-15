@@ -10,6 +10,7 @@ tym urządzeniu. Zapis nie jest synchronizowany między urządzeniami.
 
 ## Prezentacja wideo
 
+https://github.com/poziemski/gliwice-przygoda/blob/main/demo.mp4
 
 ## Muzyka i efekty dźwiękowe
 
